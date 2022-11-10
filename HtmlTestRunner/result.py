@@ -403,6 +403,13 @@ class HtmlTestResult(TextTestResult):
         with open(path_file, 'w') as report_file:
             report_file.write(report)
 
+    def _count_relevant_tb_levels(self, tb):
+        length = 0
+        while tb and not self._is_relevant_tb_level(tb):
+            length += 1
+            tb = tb.tb_next
+        return length
+
     def _exc_info_to_string(self, err, test):
         """ Converts a sys.exc_info()-style tuple of values into a string."""
         # if six.PY3:
